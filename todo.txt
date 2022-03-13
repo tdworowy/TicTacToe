@@ -1,4 +1,4 @@
  - tests
- - ai
+ - AI
  - graphic
  - online multiplayer
