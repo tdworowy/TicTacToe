@@ -8,9 +8,19 @@ def transposition(array: list[list]) -> list[list]:
     return [[array[j][i] for j in range(len(array))] for i in range(len(array[0]))]
 
 
-def get_diagonal(array: list[list]) -> list[list]:  # TODO fix it - works only for 3x3 arrays
-    diag1 = [array[0][0], array[len(array) // 2][len(array) // 2], array[len(array) - 1][len(array) - 1]]
-    diag2 = [array[0][len(array) - 1], array[len(array) // 2][len(array) // 2], array[len(array) - 1][0]]
+def get_diagonal(
+    array: list[list],
+) -> list[list]:  # TODO fix it - works only for 3x3 arrays
+    diag1 = [
+        array[0][0],
+        array[len(array) // 2][len(array) // 2],
+        array[len(array) - 1][len(array) - 1],
+    ]
+    diag2 = [
+        array[0][len(array) - 1],
+        array[len(array) // 2][len(array) // 2],
+        array[len(array) - 1][0],
+    ]
     return [diag1, diag2]
 
 
@@ -21,7 +31,10 @@ def get_diagonal_with_indexes(array: list[list]) -> list[list[tuple]]:
 
 class Player(ABC):
     def __init__(self, player_symbol: int, enemy_symbol: int, empty_symbol: float):
-        assert player_symbol in [0, 1] and enemy_symbol in [0, 1], "Symbol must be 1 or 0"
+        assert player_symbol in [0, 1] and enemy_symbol in [
+            0,
+            1,
+        ], "Symbol must be 1 or 0"
         assert player_symbol != enemy_symbol
         self.player_symbol = player_symbol
         self.enemy_symbol = enemy_symbol
@@ -64,7 +77,10 @@ class AiPlayer(Player):
 
         # check diagonal
         for index, diagonal in enumerate(get_diagonal_with_indexes(game_array)):
-            if self.___count_symbol([cell[0] for cell in diagonal], self.enemy_symbol) == len(diagonal) - 1:
+            if (
+                self.___count_symbol([cell[0] for cell in diagonal], self.enemy_symbol)
+                == len(diagonal) - 1
+            ):
                 index = [cell[0] for cell in diagonal].index(self.empty_symbol)
                 return diagonal[index][1:3]
 
@@ -73,11 +89,7 @@ class AiPlayer(Player):
 
 
 class Game:
-    rules = {
-        -inf: "_",
-        1: "X",
-        0: "O"
-    }
+    rules = {-inf: "_", 1: "X", 0: "O"}
 
     def __init__(self, player1: Player, player2: Player, size: int):
         self.player1 = player1
@@ -123,7 +135,7 @@ class Game:
     def play(self):
         self.display()
 
-        for i in range(((self.size ** 2) // 2) + 1):
+        for i in range(((self.size**2) // 2) + 1):
             print("Player1 move")
             self.__make_move(self.player1)
             self.display()
